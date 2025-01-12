@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Contact Manager Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+afd110c089a2b56f6708d17e8bcbe9042562abf4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Contact Manager Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Contact Manager Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
