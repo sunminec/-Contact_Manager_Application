@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Contact_Manager_Application.Models.Contact>
+
+    @{
+    ViewData["Title"] = "Contacts";
+    }
+
+    <h1>Contacts</h1>
+
+    <form method="post" enctype="multipart/form-data" asp-controller="Contact" asp-action="UploadCsv">
+        <input type="file" name="file" />
+        <button type="submit">Upload CSV</button>
+    </form>
+
+    @if (Model != null && Model.Any())
+{
+    <table id="contactsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date of Birth</th>
+                <th>Married</th>
+                <th>Phone</th>
+                <th>Salary</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contact in Model)
+            {
+            <tr>
+                <td contenteditable="true" data-id="@contact.Id" data-field="Name">@contact.Name ?? "No Name"</td>
+                <td contenteditable="true" data-id="@contact.Id" data-field="DateOfBirth">@contact.DateOfBirth.ToShortDateString()</td>
+                <td contenteditable="true" data-id="@contact.Id" data-field="Married">@contact.Married</td>
+                <td contenteditable="true" data-id="@contact.Id" data-field="Phone">@contact.Phone ?? "Not Provided"</td>
+                <td contenteditable="true" data-id="@contact.Id" data-field="Salary">@contact.Salary</td>
+                <td>
+                    <form method="post" asp-controller="Contact" asp-action="Delete">
+                        <input type="hidden" name="id" value="@contact.Id" />
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No contacts available.</p>
+}
+
+    <script>
+        document.querySelectorAll("[contenteditable]").forEach(cell => {
+            cell.addEventListener("blur", function () {
+                const id = this.dataset.id;
+                const field = this.dataset.field;
+                const value = this.textContent;
+
+                fetch(`/Contact/Edit`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        Id: id,
+                        [field]: value
+                    })
+                });
+            });
+        });
+    </script>
